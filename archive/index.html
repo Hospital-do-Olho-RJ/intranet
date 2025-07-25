@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intranet - Hospital do Olho</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .icon {
+      font-size: 2rem;
+      color: #0d6efd;
+    }
+    .header {
+      background-color: #0d6efd;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 4px solid #0b5ed7;
+    }
+    #searchInput {
+      margin-top: 2rem;
+    }
+    #ramalCard {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.98);
+      padding: 2rem;
+      overflow-y: auto;
+      display: none;
+      z-index: 9999;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    #ramalCard.active {
+      display: block;
+    }
+    #ramalCard .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #000;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Intranet - Hospital do Olho</h1>
+    <p>Seu ambiente de trabalho digital</p>
+  </div>
+
+  <div class="container mt-5" id="mainCards">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-envelope icon mb-3"></i>
+            <h5 class="card-title">Webmail</h5>
+            <p>Acesse seu e-mail institucional.</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-folder-open icon mb-3"></i>
+            <h5 class="card-title">Central de Documentos</h5>
+            <p>POPs, Manuais e Arquivos dos Setores.</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" onclick="abrirRamais()" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-phone icon mb-3"></i>
+            <h5 class="card-title">Ramais Internos</h5>
+            <p>Contatos e telefones úteis por unidade.</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-users icon mb-3"></i>
+            <h5 class="card-title">Rede Corporativa</h5>
+            <p>Informativos, feedbacks e canal com o RH.</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-chalkboard-teacher icon mb-3"></i>
+            <h5 class="card-title">Trilhas de Treinamento</h5>
+            <p>Cursos, certificados e evolução profissional.</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-headset icon mb-3"></i>
+            <h5 class="card-title">Abertura de Chamados</h5>
+            <p>Solicitações para TI, RH e Administrativo.</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-poll icon mb-3"></i>
+            <h5 class="card-title">Pesquisas e Avaliações</h5>
+            <p>Clima organizacional e feedbacks 360°.</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-lightbulb icon mb-3"></i>
+            <h5 class="card-title">Caixa de Sugestões</h5>
+            <p>Ideias para melhorar nosso ambiente.</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" class="text-decoration-none">
+          <div class="card text-center p-4">
+            <i class="fas fa-award icon mb-3"></i>
+            <h5 class="card-title">Reconhecimentos</h5>
+            <p>Colaboradores destaque e boas práticas.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="ramalCard">
+    <span class="close-btn" onclick="fecharRamais()">&times;</span>
+    <h2 class="text-center mb-4">Ramais Internos</h2>
+    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Buscar por local, unidade ou ramal...">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Local</th>
+            <th>Unidade</th>
+            <th>Ramal</th>
+          </tr>
+        </thead>
+        <tbody id="ramaisTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const ramais = [
+      { local: "Recepção 1", unidade: "COB", ramal: "5031" },
+      { local: "Recepção 2", unidade: "COB", ramal: "5024" },
+      { local: "Recepção Exames", unidade: "COB", ramal: "5018" },
+      { local: "Michele Oliveira", unidade: "COB", ramal: "5012" },
+      { local: "Consultório 1", unidade: "COB", ramal: "5013" },
+      { local: "Consultório 2", unidade: "COB", ramal: "5025" },
+      { local: "Consultório 3", unidade: "COB", ramal: "5017" },
+      { local: "Dr José Carlos", unidade: "COB", ramal: "5022" },
+      { local: "Juliana Ribeiro", unidade: "COB", ramal: "5014" },
+      { local: "Hérika Quaresma", unidade: "COB", ramal: "5015" },
+      { local: "Recepção 1", unidade: "Botafogo", ramal: "5041" },
+      { local: "Recepção 2", unidade: "Botafogo", ramal: "5065" },
+      { local: "Recepção exames", unidade: "Botafogo", ramal: "5011" },
+      { local: "Faturamento", unidade: "Botafogo", ramal: "5056" },
+      { local: "Recepção Centro Cirurgico", unidade: "Botafogo", ramal: "5002" },
+      { local: "Marketing", unidade: "Botafogo", ramal: "5020" },
+      { local: "Centro cirúrgico", unidade: "Botafogo", ramal: "5021" },
+      { local: "RH", unidade: "Botafogo", ramal: "5051" },
+      { local: "Joana", unidade: "Botafogo", ramal: "5049" },
+      { local: "Financeiro", unidade: "Botafogo", ramal: "5058" },
+      { local: "TI", unidade: "Botafogo", ramal: "5066" },
+      { local: "Rafael Macedo", unidade: "Botafogo", ramal: "5010" },
+      { local: "Compras", unidade: "Botafogo", ramal: "5052" },
+      { local: "Supervisão", unidade: "Nilópolis", ramal: "5101" },
+      { local: "Recepção 1", unidade: "Nilópolis", ramal: "5102" },
+      { local: "Recepção 2", unidade: "Nilópolis", ramal: "5103" },
+      { local: "Recepção exames 1", unidade: "Nilópolis", ramal: "5104" },
+      { local: "Recepção exames 2", unidade: "Nilópolis", ramal: "5105" },
+      { local: "Centro cirúrgico", unidade: "Nilópolis", ramal: "5106" },
+      { local: "Supervisora", unidade: "Nilópolis", ramal: "5107" },
+      { local: "Supervisora", unidade: "SJM", ramal: "5201" },
+      { local: "Recepção 1", unidade: "SJM", ramal: "5202" },
+      { local: "Recepção 2", unidade: "SJM", ramal: "5203" },
+      { local: "Centro cirúrgico", unidade: "SJM", ramal: "5204" },
+      { local: "Supervisora", unidade: "Magé", ramal: "5401" },
+      { local: "Recepção SUS 1", unidade: "Magé", ramal: "5402" },
+      { local: "Recepção SUS 2", unidade: "Magé", ramal: "5403" },
+      { local: "Recepção Part 1", unidade: "Magé", ramal: "5404" },
+      { local: "Recepção CC", unidade: "Magé", ramal: "5405" },
+      { local: "Centro Cirúrgico", unidade: "Magé", ramal: "5406" },
+      { local: "Faturamento", unidade: "Magé", ramal: "5407" },
+      { local: "Supervisora", unidade: "Lagos", ramal: "5301" },
+      { local: "Recepção SUS 1", unidade: "Lagos", ramal: "5302" },
+      { local: "Recepção SUS 2", unidade: "Lagos", ramal: "5303" },
+      { local: "Recepção SUS 3", unidade: "Lagos", ramal: "5304" },
+      { local: "Recepção Part 1", unidade: "Lagos", ramal: "5305" },
+      { local: "Recepção Part 2", unidade: "Lagos", ramal: "5306" },
+      { local: "Recepção CC", unidade: "Lagos", ramal: "5307" },
+      { local: "Centro Cirúrgico", unidade: "Lagos", ramal: "5308" },
+      { local: "Faturamento", unidade: "Lagos", ramal: "5309" },
+      { local: "Supervisor", unidade: "Call Center", ramal: "6000" },
+      { local: "PA 1", unidade: "Call Center", ramal: "6001" },
+      { local: "PA 2", unidade: "Call Center", ramal: "6002" },
+      { local: "PA 3", unidade: "Call Center", ramal: "6003" },
+      { local: "PA 4", unidade: "Call Center", ramal: "6004" },
+      { local: "PA 5", unidade: "Call Center", ramal: "6005" },
+      { local: "PA 6", unidade: "Call Center", ramal: "6006" },
+      { local: "PA 7", unidade: "Call Center", ramal: "6007" },
+      { local: "PA 8", unidade: "Call Center", ramal: "6008" },
+      { local: "PA 9", unidade: "Call Center", ramal: "6009" },
+      { local: "PA 10", unidade: "Call Center", ramal: "6010" }
+    ];
+
+    const tableBody = document.getElementById("ramaisTable");
+    const searchInput = document.getElementById("searchInput");
+
+    function renderTable(data) {
+      tableBody.innerHTML = "";
+      data.forEach(item => {
+        const row = `<tr><td>${item.local}</td><td>${item.unidade}</td><td>${item.ramal}</td></tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    function abrirRamais() {
+      document.getElementById("ramalCard").classList.add("active");
+      document.getElementById("mainCards").style.display = "none";
+      renderTable(ramais);
+    }
+
+    function fecharRamais() {
+      document.getElementById("ramalCard").classList.remove("active");
+      document.getElementById("mainCards").style.display = "block";
+      searchInput.value = "";
+    }
+
+    searchInput.addEventListener("keyup", () => {
+      const query = searchInput.value.toLowerCase();
+      const filtered = ramais.filter(item =>
+        item.local.toLowerCase().includes(query) ||
+        item.unidade.toLowerCase().includes(query) ||
+        item.ramal.includes(query)
+      );
+      renderTable(filtered);
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
