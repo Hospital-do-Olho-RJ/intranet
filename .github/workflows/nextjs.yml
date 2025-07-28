@@ -40,10 +40,11 @@ jobs:
         with:
           node-version: "20"
           cache: 'yarn'
-      - name: Enable Corepack
-        run: corepack enable
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          corepack enable
+          corepack prepare yarn@4.9.1 --activate
+          yarn install --immutable
       - name: Build with Next.js
         run: yarn build
       - name: Upload artifact
