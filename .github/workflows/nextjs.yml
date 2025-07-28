@@ -25,18 +25,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
 
       - name: Enable Corepack
-        run: corepack enable
+        run: |
+          corepack enable
+          corepack prepare yarn@4.9.1 --activate
+
+      - name: Debug PATH and Yarn executable
+        run: |
+          echo "PATH: $PATH"
+          which yarn
+          which corepack
+
+      - name: Check Yarn version
+        run: corepack yarn --version
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: corepack yarn install --immutable
 
       - name: Build and Export Next.js app
         run: |
-          yarn build
-          yarn export
+          corepack yarn build
+          corepack yarn export
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
