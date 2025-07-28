@@ -27,10 +27,7 @@ jobs:
           node-version: '20'
           cache: 'yarn'
 
-      - name: Enable Corepack and install Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@4.9.1 --activate
+      
 
       - name: Install dependencies
         run: yarn install --immutable
