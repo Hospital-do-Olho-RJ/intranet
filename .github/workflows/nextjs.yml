@@ -40,10 +40,15 @@ jobs:
         with:
           node-version: "20"
           cache: 'yarn'
-      - name: Install dependencies
+      - name: Debug and Install Dependencies
         run: |
+          echo "Initial Yarn location: $(which yarn)"
+          echo "Initial Yarn version: $(yarn --version)"
+          echo "Initial PATH: $PATH"
           corepack enable
           corepack prepare yarn@4.9.1 --activate
+          echo "Post-Corepack Yarn location: $(which yarn)"
+          echo "Post-Corepack Yarn version: $(yarn --version)"
           yarn install --immutable
       - name: Build with Next.js
         run: yarn build
