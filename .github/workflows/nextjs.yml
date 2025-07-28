@@ -30,7 +30,9 @@ jobs:
       
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          corepack enable
+          yarn install --immutable
 
       - name: Build and Export Next.js app
         run: |
