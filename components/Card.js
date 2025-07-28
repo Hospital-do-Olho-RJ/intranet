@@ -7,7 +7,6 @@ export default function Card({ item, onClick }) {
           <i className={`fas ${item.icon} icon mb-3`}></i>
           <h5 className="card-title">{item.title}</h5>
           <p>{item.text}</p>
-          <p style={{fontSize: "10px", color: "red"}}>Debug href: {item.href}</p>
         </div>
       </a>
     </div>
