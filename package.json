@@ -2,11 +2,11 @@
   "name": "intranet",
   "version": "1.0.0",
   "description": "Intranet project",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "export": "next export",
+  "start:static": "npx serve out"
   },
   "keywords": [],
   "author": "",
